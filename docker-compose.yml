@@ -1,0 +1,28 @@
+version: '2'
+
+services:
+
+  postgres:
+    image: postgres:9.6
+    ports:
+      - "5432:5432"
+
+  php:
+    image: drupal:8.4.4-apache
+    ports:
+      - "80:80"
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - postgres
+    links:
+      - postgres
+
+  pgadmin:
+    image: fenglc/pgadmin4
+    ports:
+      - "5050:5050"
+    depends_on:
+      - postgres
+    links:
+      - postgres
